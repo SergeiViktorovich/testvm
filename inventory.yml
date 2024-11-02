@@ -1,0 +1,2 @@
+[web_servers]
+master ansible_host=89.169.142.23 ansible_user=ubuntu

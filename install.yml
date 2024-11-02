@@ -1,0 +1,18 @@
+---
+- name: Setup Ansible on server
+  hosts: web_servers
+  become: true
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install Ansible
+      apt:
+        name: ansible
+        state: present
+        update_cache: yes
+    - name: Generate an ed25519 SSH key
+      command: "ssh-keygen -t ed25519 -C 'mykey' -f /home/ubuntu/.ssh/id_ed25519 -q -N ''"
+      args:
+        creates: /home/ubuntu/.ssh/id_ed25519  # Проверяет, существует ли файл, чтобы не генерировать ключ повторно
