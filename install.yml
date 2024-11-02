@@ -13,6 +13,12 @@
         state: present
         update_cache: yes
     - name: Generate an ed25519 SSH key
-      command: "ssh-keygen -t ed25519 -C 'testvm' -f /home/ubuntu/.ssh/id_ed25519 -q -N ''"
+      command: ssh-keygen -t ed25519 -C 'testvm' -f /home/ubuntu/.ssh/id_ed25519 -q -N ''
       args:
         creates: /home/ubuntu/.ssh/id_ed25519  # Проверяет, существует ли файл, чтобы не генерировать ключ повторно
+    - name: Set correct ownership for SSH key
+      ansible.builtin.file:
+        path: /home/ubuntu/.ssh/id_ed25519  # Путь к ключу
+        owner: ubuntu                       # Задайте владельца
+        group: ubuntu                       # Задайте группу
+        mode: '0600'                      # Права доступа
